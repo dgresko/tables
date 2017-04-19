@@ -1,0 +1,64 @@
+/******************************************************************
+
+Variables
+
+******************************************************************/
+
+$black:             #231f20;
+$white:             #fff;
+
+$light-gray:        #f8f9fa;
+$gray:              #eaedf2;
+$text-color:        #5c6b80;
+
+$link-color:        $black;
+$link-hover:        darken($link-color, 9%);
+
+$border-color:      #ccc;
+$disabled-gray:     #cfcfcf;
+$alert-red:					red;
+$alert-green:				#645564;
+$alert-blue:				blue;
+
+// Grays
+$black: #000000;
+$light-black: #252b30;
+$gray-dark: #404a52;
+$gray: #696969;
+$gray-med: #8997a3;
+$gray-light-med: #738594;
+$gray-light-light: #c5ced3;
+$gray-light: #dde3eb;
+$background-gray: #edf0f2;
+$porcelain: #f5f8fa;
+$gray-super-light: #fcfcfc;
+$white: #ffffff;
+
+//Colors
+$blue: #3455db;
+$blue-hover: #144191;
+$red: #ed1c24;
+$orange: #ffa500;
+$pink: #f16e6e;
+$green: #028982;
+$teal: #e6f7fc;
+$mint: #c3eafd;
+$red-light: #fff3f2;
+$pink: #f16e6e; //- errors
+$yellow: #f3bd12;
+
+
+// Usage
+$primary-color: $blue;
+$error: $red;
+$dark-inputs: #3f4448;
+$table-stripe: $porcelain;
+$table-stripe-hover: #eef0f1;
+$hrule: $mint;
+$faint-bg: #f9fbfc;
+$faint-bg-hover: #edf0f1;
+$maps-background: #e5e3df;
+
+
+// FROG inline colors
+$another-gray: #e7ecf1;

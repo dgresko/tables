@@ -1,0 +1,170 @@
+<div>
+  <div class="flex-table column-fixed" role="grid">
+    <div class="flex-table__wrapper col-count-7" toggle-cell>
+      <div class="flex-table__content {{'move-left-'+moveLeftVal}}">
+        <ul class="flex-table-header" role="row">
+          <li role="columnheader"
+              class="flex-table__column  column-header-0">
+            <h4 class="flex-table-header">
+              name
+            </h4>
+          </li>
+          <li role="columnheader"
+              class="flex-table__column column-header-1">
+            <h4 class="flex-table-header__column-non-link">
+              food type
+            </h4>
+          </li>
+          <li role="columnheader"
+              class="flex-table__column column-header-2">
+            <h4 class="flex-table-header__column-non-link">
+              price
+            </h4>
+          </li>
+          <li role="columnheader"
+              class="flex-table__column column-header-3">
+            <h4 class="flex-table-header__column-non-link">
+              neighborhood
+            </h4>
+          </li>
+          <li role="columnheader"
+              class="flex-table__column  column-header-4">
+            <h4 class="flex-table-header__column-non-link">
+              contact info
+            </h4>
+          </li>
+          <li role="columnheader"
+              class="flex-table__column column-header-5">
+            <h4 class="flex-table-header__column-non-link">
+              website
+            </h4>
+          </li>
+          <li role="columnheader"
+              class="flex-table__column column-header-6">
+            <button aria-label="sort column"
+                    class="flex-table-header__column-sort-link">
+              BYO
+            </button>
+          </li>
+        </ul>
+        <div class="flex-table-body">
+          <ul ng-repeat="restaurant in data" role="row" tabindex="0" class="flex-table-body__row"
+              hover-class="fixedCol-{{ $index }}">
+            <li table-cell-hover="0" class="flex-table__column col-0">
+                <span class="flex-table-body__inner-el">
+                    <span class="cell cell__mobile-header">
+                        name
+                    </span>
+                    <span class="cell">
+                        <a class="flex-table-body__number-link">
+                            {{::restaurant.name}}
+                        </a>
+                    </span>
+                </span>
+            </li>
+            <li table-cell-hover="1" class="flex-table__column col-1">
+                <span class="flex-table-body__inner-el">
+                    <span class="cell cell__mobile-header">
+                        food type
+                    </span>
+                    <span class="cell">
+                        {{::restaurant.type}}
+                    </span>
+                </span>
+            </li>
+            <li table-cell-hover="2" class="flex-table__column col-2">
+                <span class="flex-table-body__inner-el">
+                    <span class="cell cell__mobile-header">
+                        price
+                    </span>
+                    <span class="cell" ng-class="::'cell__' + repair.status.toLowerCase()">
+                        {{::restaurant.price}}
+                    </span>
+                </span>
+            </li>
+            <li table-cell-hover="3" class="flex-table__column col-3">
+                <span class="flex-table-body__inner-el">
+                    <span class="cell cell__mobile-header">
+                        neighborhood
+                    </span>
+                    <span class="cell">
+                        {{::restaurant.neighborhood}}
+                    </span>
+                </span>
+            </li>
+            <li table-cell-hover="4" class="flex-table__column col-4">
+                <span class="flex-table-body__inner-el">
+                    <span class="cell cell__mobile-header">
+                        contact info
+                    </span>
+                    <span class="cell">
+                        <span class="cell__text--line-one">
+                      {{::restaurant.address}}
+                      </span>
+                      <span class="cell__text--line-two">
+                      {{::restaurant.phone}}
+                      </span>
+                    </span>
+                </span>
+            </li>
+            <li table-cell-hover="5" class="flex-table__column col-5">
+                <span class="flex-table-body__inner-el">
+                    <span class="cell cell__mobile-header">
+                        website
+                    </span>
+                    <span class="cell">
+                      <a href="{{::restaurant.website}}" target="_blank">{{::restaurant.website}}</a>
+                    </span>
+                </span>
+            </li>
+            <li table-cell-hover="6" class="flex-table__column col-6">
+                <span class="flex-table-body__inner-el">
+                    <span class="cell cell__mobile-header">
+                        BYO
+                    </span>
+                    <span class="cell">
+                      <svg class="byo" ng-class="{'isByo': restaurant.byo}" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+                          <title></title>
+                          <path class="fill" d="M388.892 8.428c-2.788-5.19-8.203-8.428-14.095-8.428h-237.594c-5.892 0-11.307 3.238-14.095 8.428-17.734 33.010-27.108 71.592-27.108 111.572 0 52.706 16.186 102.414 45.577 139.969 22.714 29.023 51.24 48.27 82.423 56.086v163.945h-48c-8.836 0-16 7.163-16 16s7.164 16 16 16h160c8.837 0 16-7.163 16-16s-7.163-16-16-16h-48v-163.945c31.184-7.816 59.709-27.062 82.423-56.086 29.391-37.555 45.577-87.263 45.577-139.969 0-39.98-9.374-78.561-27.108-111.572zM147.050 32h217.9c12.487 26.451 19.050 56.669 19.050 88 0 2.682-0.054 5.348-0.148 8h-255.703c-0.095-2.652-0.148-5.318-0.148-8-0.001-31.332 6.563-61.549 19.049-88z"></path>
+                      </svg>
+                    </span>
+                </span>
+            </li>
+          </ul>
+          <ul role="row" tabindex="0" class="flex-table-body__row fixed-column" ng-show="data.length">
+            <li table-cell-hover="0" class="flex-table__column col-0 fixed-column__cell">
+              <ul class="fixed-column__moved-element">
+                <!-- FIXED COLUMN HEADER -->
+                <li role="columnheader" class="flex-table__column column-header-0">
+                  <h4 aria-label="sort column"
+                          class="flex-table-header__column-non-link">
+                    name
+                  </h4>
+                </li>
+                <!-- END OF HEADER -->
+                <li class="fixed-column__cell-wrap" ng-repeat="restaurant in data"
+                    id="fixedCol-{{ $index }}">
+                  <div class="fixed-column__first-cell">
+                                        <span class="flex-table-body__inner-el">
+                                            <span class="cell">
+                                                {{restaurant.name}}
+                                            </span>
+                                        </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li table-cell-hover="1" class="flex-table__column col-1"></li>
+            <li table-cell-hover="2" class="flex-table__column col-2"></li>
+            <li table-cell-hover="3" class="flex-table__column col-3"></li>
+            <li table-cell-hover="4" class="flex-table__column col-4"></li>
+            <li table-cell-hover="5" class="flex-table__column col-5"></li>
+            <li table-cell-hover="6" class="flex-table__column col-6"></li>
+          </ul>
+        </div>
+        <span class="beacon"></span>
+      </div>
+      <left-right-slider></left-right-slider>
+    </div>
+  </div>
+</div>

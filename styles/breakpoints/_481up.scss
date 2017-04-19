@@ -1,0 +1,1341 @@
+.module-container {
+  border-top: 3px solid $black;
+  box-shadow: 1px 2px 6px 2px #6d6d6d;
+  margin: 40px 0 0;
+}
+.table-container {
+    margin: 0;
+    display: block;
+
+    background-color: $white;
+    overflow: hidden; // this line cuts off table pagination at the bottom of the page
+    padding: 0 12px 40px;
+
+    @include break(small) {
+      padding: 0 30px 40px;
+    }
+}
+.app-body {
+  margin: 0;
+  max-width: 1440px;
+  padding: 0 8px;
+
+  @include break(medium) {
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+}
+
+
+$four-col: 48rem; // 768px
+$six-col: 63.750rem; // 1020px
+$eight-col: 76.250rem; // 1220
+$ten-col: 88.750rem; // 1420
+
+// extendable class for table
+.table-margin {
+  @include break(small) {
+    margin: 0 -30px;
+  }
+  margin: 0 -12px;
+}
+
+.beacon { //used for js media query
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+
+.flex-table {
+  margin-top: 45px;
+  &:before {
+    content: '';
+    height: 1px;
+    width: calc(100% + 60px);
+    background-color: black;
+    display: block;
+    margin-left: -30px;
+  }
+  &__no-data-error {
+    font-size: 1rem;
+    margin: 40px 0;
+    text-align: center;
+  }
+
+  &__expandable-column {
+    background-color: $porcelain;
+    display: none;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 69.5px;
+    z-index: 9;
+
+    @include break(medium) {
+      .group-controls & {
+        display: block;
+      }
+    }
+    .expand-collapse {
+      background-color: $white;
+      border-bottom: 2px solid $black;
+      border-right: 1px solid $background-gray;
+      height: 50px;
+      padding: 10px 20px;
+      width: 100%;
+
+      .icon-holder {
+        width: 8px;
+      }
+
+      &__expanded {
+        .plus {
+          display: none;
+        }
+      }
+    }
+  }
+  .fill {
+    fill: $black;
+  }
+}
+
+/******************************************************************
+toggle visiblity of horizontal slider
+/******************************************************************/
+@mixin scrollersVisible {
+  padding-right: 69px;
+  position: relative;
+  .slider {
+    display: block;
+  }
+  .group-section__fixed-container {
+    right: 69px;
+  }
+}
+@mixin scrollersHidden {
+  padding-right: 0;
+  .slider {
+    display: none;
+  }
+  .group-section__fixed-container {
+    right: 0;
+  }
+}
+@for $i from 5 through 14 {
+  .col-count-#{$i} {
+    @if $i > 4 and $i < 7 {
+      @media screen and (min-width: $four-col) {
+        @include scrollersVisible;
+      }
+      @media screen and (min-width: $six-col) {
+        @include scrollersHidden;
+      }
+    }
+    @if $i > 6 and $i < 9 {
+      @media screen and (min-width: $four-col) {
+        @include scrollersVisible;
+      }
+      @media screen and (min-width: $eight-col) {
+        @include scrollersHidden;
+      }
+    }
+    @if $i > 8 and $i < 11 {
+      @media screen and (min-width: $four-col) {
+        @include scrollersVisible;
+      }
+      @media screen and (min-width: $ten-col) {
+        @include scrollersHidden;
+      }
+    }
+    @if $i > 10 {
+      @media screen and (min-width: $four-col) {
+        @include scrollersVisible;
+      }
+    }
+  }
+}
+
+.flex-table {
+  &__wrapper {
+    @extend .table-margin;
+    // overflow: hidden; // to allow for last peek cell to drop down
+    position: relative;
+
+    .modal & {
+      margin: 0 -20px;
+    }
+
+    .group-controls & {
+
+      @include break(medium) {
+        padding-left: 69px;
+      }
+    }
+  }
+
+  &__content {
+    left: 0;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    //position: relative;
+    width: 100%;
+  }
+  &__column {
+    display: block;
+    font-size: 1rem;
+    line-height: 1rem;
+
+    @include break(medium) {
+      border-bottom: 1px solid $gray-light;
+      border-right: 1px solid $background-gray;
+      font-size: 1rem;
+      line-height: 1rem;
+      flex-shrink: 1;
+      flex-grow: 0;
+      height: 60px;
+      min-width: 60px;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s ease, background-color 1ms, border-color 1ms;
+      width: 0;
+      &:last-child {
+        border-right: 0;
+        padding-left: 0;
+      }
+      &:last-child {
+        padding-right: 0;
+
+      }
+    }
+  }
+}
+.slider {
+  background-color: $porcelain;
+  display: none;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 69.5px;
+  z-index: 9;
+
+  svg {
+    width: 11px;
+  }
+
+  .fill {
+    fill: $gray;
+  }
+  &__buttons {
+    background-color: $white;
+    border-bottom: 2px solid $black;
+    border-left: 1px solid $background-gray;
+    display: flex;
+    height: 50px;
+  }
+
+  &__button {
+    width: 50%;
+
+    &:disabled {
+      svg {
+        opacity: 0.3;
+      }
+    }
+  }
+}
+
+.flex-table-mobile-header {
+  display: flex;
+  padding: 12px 10px 10px 12px;
+
+  @include break(medium) {
+    display: none;
+  }
+}
+.byo {
+  height: 30px;
+  width: 30px;
+  .fill {
+    fill: $gray-light;
+  }
+}
+.isByo {
+  .fill {
+    fill: #8c1111;
+  }
+}
+
+.flex-table-header {
+  display: none;
+
+  @include break(medium) {
+    border-bottom: 2px solid $black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    left: 0;
+    min-height: 50px;
+    transition: left 0.3s ease;
+
+    [class^='cell-width'] {
+
+      display: block;
+      font-weight: normal;
+      text-align: left;
+      vertical-align: top;
+      width: 100%;
+    }
+
+    .flex-table__column {
+      height: 48px;
+    }
+
+    &__column-non-link {
+      font-weight: bold;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    &__column-sort-link,
+    &__column-non-link {
+      align-items: center;
+      color: $black;
+      display: flex;
+      font-size: 0.75rem;
+      height: 48px;
+      overflow: hidden;
+      padding: 10px 28px 6px 10px;
+      position: relative;
+      text-align: left;
+      text-transform: uppercase;
+      width: 100%;
+
+      .icon-holder {
+        display: block;
+        height: 14px;
+        position: absolute;
+        right: 7px;
+        top: 50%;
+        transform: translateY(-60%);
+        vertical-align: middle;
+        width: 14px;
+
+        .fill {
+          fill: $gray-light;
+        }
+
+        svg {
+          height: 100%;
+        }
+      }
+
+      &.col-active_desc {
+        .icon-holder {
+          display: inline-block;
+        }
+
+        .fill {
+          fill: $black;
+        }
+      }
+      &.col-active_asc {
+        .icon-holder {
+          display: inline-block;
+          transform: rotate(180deg);
+        }
+        .fill {
+          fill: $black;
+        }
+      }
+    }
+  }
+
+  .table-checkbox {
+
+    & + .flex-table-header__column-sort-link {
+      width: calc(100% - 68px);
+
+    }
+  }
+  &__row { // fixed first column
+
+    @include break(medium) {
+      border-bottom: 0;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 0;
+      vertical-align: top;
+      align-items: stretch;
+    }
+  }
+}
+
+.flex-table-body {
+  position: static; //must be static so fixed column doesn't sroll
+
+  &__row {
+    border-bottom: 1px solid $gray-light;
+    &:last-child {
+      border-bottom: 2px solid $gray-light;
+    }
+
+    &.hovered {
+      outline: none;
+    }
+
+    @include break(medium) {
+      border-bottom: 0;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 0;
+      vertical-align: top;
+      align-items: stretch;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  &__cell-group {
+    background-color: $teal;
+    flex: 1 100%;
+  }
+
+  &__group-header {
+    padding: 10px;
+  }
+
+  &__number-link {
+    text-decoration: underline;
+  }
+  .custom-select {
+
+    &__dropdown {
+      background-color: transparent;
+
+      &.dropdown-active {
+        background-color: $white;
+      }
+    }
+
+    &__input {
+      border: none;
+    }
+
+    .icon-holder {
+      left: 6px;
+      right: auto;
+    }
+  }
+
+  &__inner-el {
+    display: inline-block;
+    padding: 12px 10px 10px 12px;
+    width: 100%;
+    & + .flex-table-body__inner-el {
+      padding-top: 0;
+    }
+
+    @include break(medium) {
+      min-height: 59px; // accounts for the 1px border bottom on the outter element
+      padding: 12px 0 5px 10px;
+      width: auto;
+    }
+  }
+  .alert {
+    color: $red;
+    font-style: italic;
+  }
+}
+
+.group-section {
+  border-top: 1px solid $gray-light;
+
+  &__fixed-container {
+    height: 40px;
+    left: 0;
+    right: 0;
+    position: absolute;
+
+    @include break(medium) {
+      .group-controls & {
+        left: 69px;
+      }
+    }
+    // see COLUMN BREAKS
+  }
+  &__group-header {
+    border-bottom: 1px solid $gray-light;
+    display: none;
+    height: 40px;
+
+    .group-controls & {
+      display: block;
+    }
+  }
+  &__button {
+    align-items: center;
+    color: $black;
+    display: flex;
+    height: 40px;
+    margin: 0;
+    padding: 0 23px 0 30px;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  &__quantity {
+    display: block;
+    margin-left: auto;
+  }
+
+  .expand-button {
+    width: 100%;
+
+    .icon-holder {
+      margin-right: 8px;
+      width: 8px;
+      height: 23px;
+
+      .fill {
+        fill: $black;
+      }
+    }
+    &__expanded {
+      .plus {
+        display: none;
+      }
+    }
+  }
+}
+
+.cell {
+  display: inline;
+
+  @include break(medium) {
+    display: block;
+    line-height: 1.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  &__text {
+    &--line-two {
+      display: block;
+    }
+    @include break(medium) {
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+      // TODO: Remove if multiline is Depricated
+      &--line-two {
+        display: block;
+        .cell-vertical__open & {
+          margin: 29px 0 15px;
+        }
+      }
+    }
+  }
+
+  .table-tooltip {
+    .icon-holder {
+      height: 19px;
+      margin-top: -2px;
+      vertical-align: top;
+      svg {
+        width: 100%;
+      }
+    }
+  }
+
+  &__mobile-header {
+    color: $gray-med;
+    line-height: 1.8rem;
+    margin-right: 5px;
+    text-transform: capitalize;
+
+    @include break(medium) {
+      display: none;
+    }
+  }
+
+  .text-editor {
+    border: none;
+    color: $black;
+    font-style: italic;
+  }
+}
+@include break(medium) {
+  @for $i from 0 through 14 {
+    .col-extendable {
+      &__#{$i} {
+        &.col-active-#{$i} {
+          .col-#{$i},
+          .column-header-#{$i} {
+            flex-basis: 30%;
+          }
+        }
+        .col-#{$i} {
+          &:after {
+            background-color: $porcelain;;
+            content: '';
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 5px;
+          }
+        }
+      }
+    }
+    .col-active-#{$i} {
+      .col-#{$i} {
+        &.cell-vertical {
+          cursor: pointer;
+
+          .flex-table-body__inner-el {
+            box-shadow: inset 0 -5px 0 0 $gray-light;
+            padding-right: 10px;
+            width: 100%;
+          }
+
+          &__open {
+            overflow: visible;
+            white-space: normal;
+            z-index: 9;
+
+            .flex-table-body__inner-el {
+              background-color: $background-gray;
+              box-shadow: none;
+              display: block;
+              white-space: normal;
+              position: absolute;
+              z-index: 9;
+            }
+
+            .cell {
+              white-space: normal;
+            }
+          }
+        }
+      }
+      .flex-table-body__row {
+        &:last-of-type {
+          .col-#{$i} {
+            &.cell-vertical {
+              &__open {
+                .flex-table-body__inner-el {
+                  position: static;
+
+                  .user-activity-report & {
+                    position: absolute;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .col-#{$i},
+    .column-header-#{$i} {
+      .hide-#{$i} & {
+        display: none;
+      }
+    }
+
+    .flex-table__column,
+    .flex-table-header__column-header {
+      .col-count-#{$i} & {
+        flex-basis: calc(100% / #{$i});
+      }
+    }
+  }
+}
+
+// Set the width of the container to overflow on smaller
+// browser sizes - also set absolute fixed column width
+@for $i from 4 through 14 {
+  .col-count-#{$i} {
+    @each $breakpoint in $four-col, $six-col, $eight-col, $ten-col {
+      $selector: 4;
+      @if $breakpoint == $four-col {
+        $selector: 4;
+      } @else if $breakpoint == $six-col {
+        $selector: 6;
+      } @else if $breakpoint == $eight-col {
+        $selector: 8;
+      } @else {
+        $selector: 10;
+      }
+      @media screen and (min-width: $breakpoint) {
+        @if $i > $selector {
+          .flex-table__content {
+            width: calc((#{$i} / #{$selector}) * 100%);
+          }
+          .fixed-column {
+            width: calc((#{$i} / #{$selector}) * (100% - 69px));
+            .group-controls & {
+              left: 69px;
+              width: calc((#{$i} / #{$selector}) * (100% - 128px));
+            }
+          }
+        } @else {
+          .flex-table__content,
+          .fixed-column {
+            width: 100%;
+          }
+          .fixed-column {
+            .group-controls & {
+              left: 69px;
+              width: calc(100% - 69px);
+            }
+          }
+        }
+        .flex-table {
+          &__no-data-error {
+            width: calc(100% / (#{$i} / #{$selector}));
+          }
+        }
+      }
+    }
+  }
+}
+
+.flex-table-header__column-header {
+  &.column-header-checkbox {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.fixed-column {
+  display: none;
+  @include break(medium) {
+    display: flex;
+    left: 0;
+    position: absolute;
+
+    &__cell {
+      border-right: 0;
+      height: 0;
+      overflow: visible;
+
+    }
+
+    .flex-table-body__row {
+      &:hover {
+        border: none;
+      }
+      &.row-hovered {
+        &:checked {
+          + label {
+            &:before {
+              border: none;
+            }
+          }
+        }
+      }
+    }
+
+    &__moved-element {
+      background-color: $gray-super-light;
+      border-right: 2px solid $mint;
+      transform: translateY(-100%);
+    }
+
+    &__cell-wrap {
+      overflow: hidden;
+    }
+
+    &__first-cell {
+      border-bottom: 1px solid $gray-light;
+      //min-height: 60px;
+    }
+
+    .column-header-0 {
+      border-bottom: 2px solid $black;
+      height: 48px;
+      width: auto;
+    }
+  }
+}
+
+.row-hovered {
+  background-color: $background-gray;
+}
+
+.flex-table-body__row {
+  &:hover {
+    background-color: $background-gray;
+  }
+}
+
+.checkbox-component {
+  display: none;
+}
+
+.selectable .checkbox-component {
+  display: inline-block;
+}
+
+.two-column-table {
+  @include break(medium) {
+    .col-0,
+    .column-header-0 {
+      width: 70%;
+    }
+    .col-1,
+    .column-header-1 {
+      width: 30%;
+    }
+  }
+}
+
+@mixin offScreen {
+  flex-shrink: 0;
+  visibility: hidden;
+}
+
+@mixin onScreen {
+  flex-shrink: 1;
+  visibility: visible;
+}
+
+$columnElements: '
+    .flex-table-body__row > .flex-table__column,
+    .flex-table-header > .flex-table__column
+';
+
+@for $i from 4 through 14 {
+  .col-count-#{$i} {
+    .flex-table__content {
+      @media screen and (min-width: $four-col) and (max-width: $six-col - 0.01rem) {
+        #{$columnElements} { // Initial page-load no scroll
+          &:nth-of-type(n) {
+            @include offScreen;
+          }
+          &:nth-of-type(-n + 4) {
+            @include onScreen;
+          }
+        }
+        &.move-left-1 {
+          #{$columnElements} {
+            &:nth-of-type(n) {
+              @include offScreen;
+            }
+            @if $i <= 8 {
+              &:nth-last-of-type(-n+4) {
+                @include onScreen;
+              }
+            } @else {
+              &:nth-of-type(n+5):nth-of-type(-n+8) { // sass-lint:disable-line force-pseudo-nesting
+                @include onScreen; // 4,5,6,7 cell
+              }
+            }
+            &.fixed-column__cell {
+              @include onScreen;
+            }
+          }
+        }
+        &.move-left-2 {
+          #{$columnElements} {
+            &:nth-of-type(n) {
+              @include offScreen;
+            }
+            @if $i <= 12 {
+              &:nth-last-of-type(-n+4) {
+                @include onScreen;
+              }
+            } @else {
+              &:nth-of-type(n+8):nth-of-type(-n+12) { // sass-lint:disable-line force-pseudo-nesting
+                @include onScreen; // 4,5,6,7 cell
+              }
+            }
+            &.fixed-column__cell {
+              @include onScreen;
+            }
+          }
+        }
+        @if $i > 8 {
+          &.move-left-1 {
+            margin-left: -100%;
+          }
+          &.move-left-2 {
+            margin-left: -(percentage($i/4) - 100);
+          }
+          .beacon {
+            width: 2px;
+          }
+        } @else if $i > 4 and $i <= 8 {
+          &.move-left-1 {
+            margin-left: -(percentage($i/4) - 100);
+          }
+          @if $i == 8 {
+            .beacon {
+              width: 2px;
+            }
+          } @else {
+            .beacon {
+              width: 1px;
+            }
+          }
+        } @else {
+          .beacon {
+            width: 0;
+          }
+        }
+      }
+      @media screen and (min-width: $six-col) and (max-width: $eight-col - 0.01rem) {
+        #{$columnElements} { // Initial page-load no scroll
+          &:nth-of-type(n) {
+            @include offScreen;
+          }
+          &:nth-of-type(-n + 6) {
+            @include onScreen;
+          }
+        }
+        &.move-left-1 {
+          #{$columnElements} {
+            &:nth-of-type(n) {
+              @include offScreen;
+            }
+            @if $i <= 12 {
+              &:nth-last-of-type(-n+6) {
+                @include onScreen;
+              }
+            } @else {
+              &:nth-of-type(n+6):nth-of-type(-n+12) { // sass-lint:disable-line force-pseudo-nesting
+                @include onScreen; // 4,5,6,7 cell
+              }
+            }
+            &.fixed-column__cell {
+              @include onScreen;
+            }
+          }
+        }
+        &.move-left-2 {
+          #{$columnElements} {
+            &:nth-of-type(n) {
+              @include offScreen;
+            }
+            @if $i <= 18 {
+              &:nth-last-of-type(-n+6) {
+                @include onScreen;
+              }
+            } @else {
+              &:nth-of-type(n+12):nth-of-type(-n+18) { // sass-lint:disable-line force-pseudo-nesting
+                @include onScreen; // 4,5,6,7 cell
+              }
+            }
+            &.fixed-column__cell {
+              @include onScreen;
+            }
+          }
+        }
+        @if $i > 12 {
+          &.move-left-1 {
+            margin-left: -100%;
+          }
+          &.move-left-2 {
+            margin-left: -(percentage($i/6) - 100);
+          }
+          .beacon {
+            width: 2px;
+          }
+        } @else if $i <= 12 and $i > 6 {
+          &.move-left-1 {
+            margin-left: -(percentage($i/6) - 100);
+          }
+
+          .beacon {
+            width: 1px;
+          }
+        } @else if $i <= 6 {
+          .beacon {
+            width: 0;
+          }
+        }
+      }
+      @media screen and (min-width: $eight-col) and (max-width: $ten-col - 0.01rem) {
+        #{$columnElements} { // Initial page-load no scroll
+          &:nth-of-type(n) {
+            @include offScreen;
+          }
+          &:nth-of-type(-n + 8) {
+            @include onScreen;
+          }
+        }
+        &.move-left-1 {
+          #{$columnElements} {
+            &:nth-of-type(n) {
+              @include offScreen;
+            }
+            @if $i <= 16 {
+              &:nth-last-of-type(-n+8) {
+                @include onScreen;
+              }
+            } @else {
+              &:nth-of-type(n+8):nth-of-type(-n+16) { // sass-lint:disable-line force-pseudo-nesting
+                @include onScreen; // 4,5,6,7 cell
+              }
+            }
+            &.fixed-column__cell {
+              @include onScreen;
+            }
+          }
+        }
+        &.move-left-1 {
+          margin-left: -(percentage($i/8) - 100);
+        }
+        @if $i > 8 {
+          .beacon {
+            width: 1px;
+          }
+        } @else if $i <= 8 {
+          .beacon {
+            width: 0;
+          }
+          &.move-left-1 {
+            margin-left: 0;
+          }
+        }
+      }
+      @media screen and (min-width: $ten-col) {
+        #{$columnElements} { // Initial page-load no scroll
+          &:nth-of-type(n) {
+            @include offScreen;
+          }
+          &:nth-of-type(-n + 10) {
+            @include onScreen;
+          }
+        }
+        &.move-left-1 {
+          #{$columnElements} {
+            &:nth-of-type(n) {
+              @include offScreen;
+            }
+            @if $i <= 20 {
+              &:nth-last-of-type(-n+10) {
+                @include onScreen;
+              }
+            } @else {
+              &:nth-of-type(n+10):nth-of-type(-n+20) { // sass-lint:disable-line force-pseudo-nesting
+                @include onScreen; // 4,5,6,7 cell
+              }
+            }
+            &.fixed-column__cell {
+              @include onScreen;
+            }
+          }
+        }
+        &.move-left-1 {
+          margin-left: -(percentage($i/10) - 100);
+        }
+        @if $i > 10 {
+          .beacon {
+            width: 1px;
+          }
+        } @else {
+          .beacon {
+            width: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.column-fixed {
+  @for $i from 0 through 14 {
+    .col-count-#{$i} {
+      .flex-table__content {
+        @media screen and (min-width: $four-col) and (max-width: $six-col - 0.01rem) { // Four Column Breakpoint
+          &:nth-of-type(n) {
+            @include offScreen;
+          }
+          :nth-of-type(-n + 4) {
+            @include onScreen;
+          }
+          &.move-left-1 {
+            #{$columnElements} {
+              &:nth-of-type(n) {
+                @include offScreen;
+              }
+              @if $i <= 7 {
+                &:nth-last-of-type(-n+4) {
+                  @include onScreen;
+                }
+              } @else {
+                &:nth-of-type(n+4):nth-of-type(-n+7) { // sass-lint:disable-line force-pseudo-nesting
+                  @include onScreen; // 4,5,6,7 cell
+                }
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          &.move-left-2 {
+            #{$columnElements} {
+              &:nth-child(n) {
+                @include offScreen;
+              }
+              @if $i <= 10 {
+                &:nth-last-of-type(-n+4) {
+                  @include onScreen;
+                }
+              } @else {
+                &:nth-of-type(n+7):nth-of-type(-n+10) { // sass-lint:disable-line force-pseudo-nesting
+                  @include onScreen;
+                }
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          &.move-left-3 {
+            #{$columnElements} {
+              &:nth-child(n) {
+                @include offScreen;
+              }
+              @if $i <= 13 {
+                &:nth-last-of-type(-n+4) {
+                  @include onScreen;
+                }
+              } @else {
+                &:nth-of-type(n+10):nth-of-type(-n+13) { // sass-lint:disable-line force-pseudo-nesting
+                  @include onScreen;
+                }
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          &.move-left-4 {
+            #{$columnElements} {
+              &:nth-child(n) {
+                @include offScreen;
+              }
+              &:nth-last-of-type(-n+4) {
+                @include onScreen;
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          @if $i >= 14 {
+            &.move-left-1 {
+              margin-left: -75%;
+            }
+            &.move-left-2 {
+              margin-left: -150%;
+            }
+            &.move-left-3 {
+              margin-left: -225%;
+            }
+            &.move-left-4 {
+              margin-left: -(percentage($i / 4) - 100%);
+            }
+            .beacon {
+              width: 4px;
+            }
+          } @else if $i >= 11 and $i < 14 {
+            &.move-left-1 {
+              margin-left: -75%;
+            }
+            &.move-left-2 {
+              margin-left: -150%;
+            }
+            &.move-left-3 {
+              margin-left: -(percentage($i / 4) - 100%);
+            }
+            .beacon {
+              width: 3px;
+            }
+          } @else if $i >= 8 and $i < 11 {
+            &.move-left-1 {
+              margin-left: -75%;
+            }
+            &.move-left-2 {
+              margin-left: -(percentage($i / 4) - 100%);
+            }
+            .beacon {
+              width: 2px;
+            }
+          } @else if $i > 4 {
+            &.move-left-1 {
+              margin-left: -(percentage($i / 4) - 100%);
+            }
+            #{$columnElements} {
+              &:nth-of-type(n + 5) {
+                @include offScreen;
+              }
+            }
+            .beacon {
+              width: 1px;
+            }
+          } @else {
+            .beacon {
+              width: 0;
+            }
+          }
+        }
+        @media screen and (min-width: $six-col) and (max-width: $eight-col - 0.01rem) { // Six Column Breakpoint
+          #{$columnElements} {
+            &:nth-of-type(n + 7) {
+              @include offScreen;
+            }
+          }
+          &.move-left-1 {
+            #{$columnElements} {
+              &:nth-of-type(n) {
+                @include offScreen;
+              }
+              @if $i <= 11 {
+                &:nth-last-of-type(-n+6) {
+                  @include onScreen;
+                }
+              } @else {
+                &:nth-of-type(n+6):nth-of-type(-n+11) { // sass-lint:disable-line force-pseudo-nesting
+                  @include onScreen; // 4,5,6,7 cell
+                }
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          &.move-left-2 {
+            #{$columnElements} {
+              &:nth-child(n) {
+                @include offScreen;
+              }
+              @if $i <= 16 {
+                &:nth-last-of-type(-n+6) {
+                  @include onScreen;
+                }
+              } @else {
+                &:nth-of-type(n+11):nth-of-type(-n+16) { // sass-lint:disable-line force-pseudo-nesting
+                  @include onScreen;
+                }
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          @if $i >= 12 {
+            &.move-left-1 {
+              margin-left: -83%;
+            }
+            &.move-left-2 {
+              margin-left: -(percentage($i/6) - 100);
+            }
+            .beacon {
+              width: 2px;
+            }
+          } @else if $i > 6 and $i < 12 {
+            &.move-left-1 {
+              margin-left: -(percentage($i/6) - 100);
+            }
+
+            .beacon {
+              width: 1px;
+            }
+          } @else if $i <=6 {
+            .beacon {
+              width: 0;
+            }
+          }
+        }
+        @media screen and (min-width: $eight-col) and (max-width: $ten-col - 0.01rem) { // Eight Columns Showing
+          #{$columnElements} {
+            &:nth-of-type(n + 9) {
+              @include offScreen;
+            }
+          }
+          &.move-left-1 {
+            margin-left: -(percentage($i/8) - 100);
+            #{$columnElements} {
+              &:nth-of-type(n) {
+                @include offScreen;
+              }
+              @if $i <= 15 {
+                &:nth-last-of-type(-n+8) {
+                  @include onScreen;
+                }
+              } @else {
+                &:nth-of-type(n+7):nth-of-type(-n+15) { // sass-lint:disable-line force-pseudo-nesting
+                  @include onScreen; // 4,5,6,7 cell
+                }
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          @if $i > 8 {
+            .beacon {
+              width: 1px;
+            }
+          } @else if $i <= 8 {
+            .beacon {
+              width: 0;
+            }
+            &.move-left-1 {
+              margin-left: 0;
+            }
+          }
+        }
+        @media screen and (min-width: $ten-col) { // Ten Columns Showing
+          #{$columnElements} {
+            &:nth-of-type(n + 11) {
+              @include offScreen;
+            }
+          }
+          &.move-left-1 {
+            margin-left: -(percentage($i/10) - 100);
+            #{$columnElements} {
+              &:nth-of-type(n) {
+                @include offScreen;
+              }
+              @if $i <= 19 {
+                &:nth-last-of-type(-n+10) {
+                  @include onScreen;
+                }
+              } @else {
+                &:nth-of-type(n+9):nth-of-type(-n+19) { // sass-lint:disable-line force-pseudo-nesting
+                  @include onScreen; // 4,5,6,7 cell
+                }
+              }
+              &.fixed-column__cell {
+                @include onScreen;
+              }
+            }
+          }
+          @if $i > 10 {
+            .beacon {
+              width: 1px;
+            }
+          } @else {
+            .beacon {
+              width: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

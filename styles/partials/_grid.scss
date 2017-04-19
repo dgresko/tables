@@ -1,0 +1,198 @@
+/******************************************************************
+
+Grid
+
+******************************************************************/
+
+
+//Set up global media queries
+$smallest: 0rem;
+$phone: 30rem; // 480px: >= landscape phone
+$tablet: 48rem; // 768px: >= portrait tablet
+$desktop: 64rem; // 1024: >= landscape tablet
+$x-large: 90.000rem; // 1440: >= xl desktop
+$xxl: 115.313rem; // 1845px >= wide [for right side notifications bar only]
+
+@mixin break($name) {
+  @if $name == 'xsmall' {
+    @media screen and (min-width: $smallest) {
+      @content;
+    }
+  } @else if $name == 'small' {
+    @media screen and (min-width: $phone) {
+      @content;
+    }
+  } @else if $name == 'medium' {
+    @media screen and (min-width: $tablet) {
+      @content;
+    }
+  } @else if $name == 'large' {
+    @media screen and (min-width: $desktop) {
+      @content;
+    }
+  } @else if $name == 'xl' {
+    @media screen and (min-width: $x-large) {
+      @content;
+    }
+  } @else if $name == 'xxl' {
+    @media screen and (min-width: $xxl) {
+      @content;
+    }
+  }
+}
+
+//GRID
+
+$pad: 20px;
+$col-1-6: 16.66%;
+$col-1-4: 25%;
+$col-1-3: 33.33333%;
+$col-2-3: 66.66666%;
+$col-1-2: 50%;
+$col-3-4: 75%;
+
+
+@mixin grid {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+@mixin row {
+  display: flex;
+  flex: 0 1 100%;
+  flex-flow: row wrap;
+  margin-left: -4px;
+  margin-right: -4px;
+
+  @include break(small) {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+}
+
+@mixin col {
+  padding-left: 4px;
+  padding-right: 4px;
+
+  @include break(small) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@mixin xs($span, $noDisplayProperty: false) {
+  padding-left: 4px;
+  padding-right: 4px;
+
+  @include break(small) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  @include break(xsmall) {
+    @if ($noDisplayProperty == false) {
+      display: block;
+    }
+
+    width: $span * 100%;
+    // flex-basis:  $span * 100%;
+    //IE11 ignores border-box property, breaking flex-basis;
+    flex-basis: auto;
+  }
+}
+@mixin sm($span, $noDisplayProperty: false) {
+  padding-left: 4px;
+  padding-right: 4px;
+
+  @include break(small) {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    @if ($noDisplayProperty == false) {
+      display: block;
+    }
+
+    width: $span * 100%;
+    // flex-basis:  $span * 100%;
+    //IE11 ignores border-box property, breaking flex-basis;
+    flex-basis: auto;
+  }
+}
+@mixin md($span, $noDisplayProperty: false) {
+  padding-left: 4px;
+  padding-right: 4px;
+
+  @include break(small) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  @include break(medium) {
+    @if ($noDisplayProperty == false) {
+      display: block;
+    }
+
+    width: $span * 100%;
+    // flex-basis:  $span * 100%;
+    //IE11 ignores border-box property, breaking flex-basis;
+    flex-basis: auto;
+  }
+}
+@mixin lg($span, $noDisplayProperty: false) {
+  padding-left: 4px;
+  padding-right: 4px;
+
+  @include break(small) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  @include break(large) {
+    @if ($noDisplayProperty == false) {
+      display: block;
+    }
+
+    width: $span * 100%;
+    // flex-basis:  $span * 100%;
+    //IE11 ignores border-box property, breaking flex-basis;
+    flex-basis: auto;
+  }
+}
+@mixin xl($span, $noDisplayProperty: false) {
+  padding-left: 4px;
+  padding-right: 4px;
+
+  @include break(small) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  @include break(xl) {
+    @if ($noDisplayProperty == false) {
+      display: block;
+    }
+
+    display: block;
+    width: $span * 100%;
+    // flex-basis:  $span * 100%;
+    //IE11 ignores border-box property, breaking flex-basis;
+    flex-basis: auto;
+  }
+}
+
+.outer-margin {
+  margin: 0 -12px;
+
+  @include break(small) {
+    margin: 0 -30px;
+  }
+}
+
+.outer-margin-padding {
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+  @include break(small) {
+    margin: 0 -30px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
